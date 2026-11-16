@@ -71,6 +71,16 @@ const i = h.indexOf("</h1>");
 return i < 0 ? card + h : h.slice(0, i + 5) + card + h.slice(i + 5);
 };
 
+// Marketplace : sur iPhone, l'appli Facebook comprend mal le lien « /create/item » (elle cherche « item »).
+const baseTask = vTask;
+vTask = function (id) {
+let h = baseTask(id);
+const help = `<div class="note n-brand small" style="margin-top:6px">Si Facebook ouvre une recherche au lieu du formulaire : touchez ← pour quitter la recherche, puis ouvrez <b>Marketplace → Vendre → Articles</b>.</div>`;
+h = h.replace('href="https://www.facebook.com/marketplace/create/item"', 'href="https://www.facebook.com/marketplace/create/"');
+h = h.replace(/(data-a="open"[^>]*>Ouvrir Marketplace ↗<\/a>)/, "$1" + help);
+return h;
+};
+
 // Si b.js a déjà fini de démarrer avant ce fichier, on rattrape ici.
 const sdkTag = () => !!document.querySelector('script[src*="connect.facebook.net"]');
 const catchUp = async () => {

@@ -2,11 +2,12 @@
 /* Configuration du propriétaire : ID de l'app Meta « Sales Agent »
    + carte « Connecter Facebook » sur l'écran d'accueil. */
 (() => {
-const APP_ID = "2636607196817612";
+const APP_ID = "2324680658298046"; // app « Sales Agent Page » (cas : Tout gérer sur votre Page)
+const OLD_IDS = ["2636607196817612"];
 const baseInit = initFb;
 initFb = async function () {
 const d = S.docs.get("settings") || {};
-if (!d.fb_app_id) { try { await put("settings", { ...settings(), kind: "settings", fb_app_id: APP_ID }); } catch { /* réessai au prochain lancement */ } }
+if (!d.fb_app_id || OLD_IDS.includes(d.fb_app_id)) { try { await put("settings", { ...settings(), kind: "settings", fb_app_id: APP_ID }); } catch { /* réessai au prochain lancement */ } }
 return baseInit();
 };
 const baseHome = vHome;

@@ -4,6 +4,14 @@
 (() => {
 const APP_ID = "2324680658298046"; // app « Sales Agent Page » (cas : Tout gérer sur votre Page)
 const OLD_IDS = ["2636607196817612"];
+const CONFIG_ID = "29751199921151585"; // configuration « Publication Page » (Facebook Login for Business)
+fbLogin = function () {
+if (!window.FB) { toast("Connexion Facebook pas encore prête, réessayez dans quelques secondes."); return; }
+FB.login((resp) => {
+if (!resp.authResponse) { toast("Connexion annulée."); return; }
+fbLoadPages().catch((e) => { S.fb.err = fbMsg(e); render(); });
+}, { config_id: CONFIG_ID });
+};
 const baseInit = initFb;
 initFb = async function () {
 const d = S.docs.get("settings") || {};
